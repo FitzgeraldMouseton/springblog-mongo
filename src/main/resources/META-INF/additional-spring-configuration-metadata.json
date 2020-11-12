@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "restore_code.code_length",
+      "type": "java.lang.String",
+      "description": "Description for restore_code.code_length."
+  }
+] }
