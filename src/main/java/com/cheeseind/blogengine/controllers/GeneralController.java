@@ -1,4 +1,4 @@
-package com.cheeseind.blogengine.rest;
+package com.cheeseind.blogengine.controllers;
 
 import com.cheeseind.blogengine.models.dto.SimpleResponseDto;
 import com.cheeseind.blogengine.models.dto.blogdto.BlogInfo;
@@ -90,7 +90,6 @@ public class GeneralController {
     public void moderation(@RequestBody final ModerationRequest request) {
         generalService.moderation(request);
     }
-
 
     @PostMapping(value = "image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public String uploadImage(@RequestParam(name = "image") final MultipartFile file) throws IOException {

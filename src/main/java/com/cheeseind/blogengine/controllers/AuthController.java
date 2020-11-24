@@ -1,4 +1,4 @@
-package com.cheeseind.blogengine.rest;
+package com.cheeseind.blogengine.controllers;
 
 import com.cheeseind.blogengine.models.dto.SimpleResponseDto;
 import com.cheeseind.blogengine.models.dto.authdto.*;

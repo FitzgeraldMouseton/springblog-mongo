@@ -37,7 +37,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().mvcMatchers("/css/**", "/js/**");
+        web.ignoring().mvcMatchers("/css/**", "/js/**", "/fonts/**", "/img/**", "/*");
     }
 
     //TODO urls for get methods, почитать еще про authenticationEntryPoint
@@ -45,9 +45,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().httpBasic().disable()
                     .authorizeRequests()
-                    .mvcMatchers(HttpMethod.GET, "/**").permitAll()
-                    .mvcMatchers(HttpMethod.POST, "/api/auth/login",
-                            "/api/auth/register", "/api/auth/restore", "/api/auth/password").permitAll()
+                    .mvcMatchers(HttpMethod.GET, "/*/**").permitAll()
+                    .mvcMatchers(HttpMethod.POST, "/api/auth/*").permitAll()
                     .anyRequest().authenticated()
                 .and()
                     .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint())

@@ -24,10 +24,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -102,16 +102,9 @@ public class PostService {
     //================================= Main logic methods ==========================================
 
     public PostsInfoResponse<PostDto> findPosts(final int offset, final int limit, final String mode) {
-        List<Post> posts;
         long postsCount = countVisiblePosts();
         Pageable pageable = PageRequest.of(offset/limit, limit);
-        posts = switch (mode) {
-            case "recent" -> postRepository.getRecentPosts(pageable);
-            case "early" -> postRepository.getEarlyPosts(pageable);
-            case "popular" -> postRepository.getPopularPosts(pageable);
-            case "best" -> postRepository.getBestPosts(pageable);
-            default -> throw new IllegalArgumentException("Wrong argument 'mode': " + mode);
-        };
+        List<Post> posts = getAllPostsInCorrectOrder(mode, pageable);
         List<PostDto> postDtos = getPostDTOs(posts);
         return new PostsInfoResponse<>(postsCount, postDtos);
     }
@@ -181,16 +174,14 @@ public class PostService {
         return new PostsInfoResponse<>(posts.size(), postDtos);
     }
 
-    //TODO рефактор + разрешить смотреть незалогиненным
+    //TODO рефактор
     public PostDto getPost(final String id) {
-        log.info(id);
         User user = userService.getCurrentUser();
         Post post = postRepository.findById(id).orElseThrow(PageNotFoundException::new);
         PostDto postDto = null;
         if (user != null && (user.equals(post.getUser()) || user.isModerator())) {
             postDto = postDtoMapper.singlePostToPostDto(post);
-        } else if (post.isActive() && post.getModerationStatus() == ModerationStatus.ACCEPTED
-                && post.getTime().isBefore(ZonedDateTime.now(ZoneOffset.UTC))) {
+        } else if (isPostVisible(post)) {
             incrementPostViewsCount(post);
             postRepository.save(post);
             postDto = postDtoMapper.singlePostToPostDto(post);
@@ -254,22 +245,24 @@ public class PostService {
 
 //    //================================= Additional methods ==========================================
 
-    private List<PostDto> getPostDTOs(final Iterable<Post> posts) {
-        List<PostDto> postDtos = new ArrayList<>();
-        posts.forEach(post -> {
-            PostDto postDTO = postDtoMapper.postToPostDto(post);
-            postDtos.add(postDTO);
-        });
-        return postDtos;
+    private List<Post> getAllPostsInCorrectOrder(String mode, Pageable pageable) {
+        List<Post> posts;
+        posts = switch (mode) {
+            case "recent" -> postRepository.getRecentPosts(pageable);
+            case "early" -> postRepository.getEarlyPosts(pageable);
+            case "popular" -> postRepository.getPopularPosts(pageable);
+            case "best" -> postRepository.getBestPosts(pageable);
+            default -> throw new IllegalArgumentException("Wrong argument 'mode': " + mode);
+        };
+        return posts;
     }
 
-    private List<ModerationResponse> getModerationPostDTOs(final Iterable<Post> posts) {
-        List<ModerationResponse> postDtos = new ArrayList<>();
-        posts.forEach(post -> {
-            ModerationResponse postDTO = postDtoMapper.postToModerationResponse(post);
-            postDtos.add(postDTO);
-        });
-        return postDtos;
+    private List<PostDto> getPostDTOs(final List<Post> posts) {
+        return posts.stream().map(postDtoMapper::postToPostDto).collect(Collectors.toList());
+    }
+
+    private List<ModerationResponse> getModerationPostDTOs(final List<Post> posts) {
+        return posts.stream().map(postDtoMapper::postToModerationResponse).collect(Collectors.toList());
     }
 
     private void removeDislikeIfExists(String userId, Post post) {
@@ -294,6 +287,11 @@ public class PostService {
 
     private void incrementPostViewsCount(Post post) {
         post.setViewCount(post.getViewCount() + 1);
+    }
+
+    private boolean isPostVisible(Post post) {
+        return post.isActive() && post.getModerationStatus() == ModerationStatus.ACCEPTED
+                && post.getTime().isBefore(ZonedDateTime.now(ZoneOffset.UTC));
     }
 }
 

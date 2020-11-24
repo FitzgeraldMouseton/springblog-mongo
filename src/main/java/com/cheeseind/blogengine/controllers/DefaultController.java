@@ -1,4 +1,4 @@
-package com.cheeseind.blogengine.rest;
+package com.cheeseind.blogengine.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,4 +11,9 @@ public class DefaultController {
     public String redirectToIndex() {
         return "forward:/";
     }
+
+//    @GetMapping("/")
+//    public String index() {
+//        return "index";
+//    }
 }

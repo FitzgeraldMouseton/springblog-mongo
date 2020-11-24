@@ -28,15 +28,9 @@ public class UserService {
         return userRepository.findByCode(code).orElse(null);
     }
 
-
     public User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!(authentication.getPrincipal() instanceof User)) {
-            throw new UnauthenticatedUserException();
-        }
-        else {
-            return userRepository.findByEmail(authentication.getName()).orElseThrow(UnauthenticatedUserException::new);
-        }
+        return userRepository.findByEmail(authentication.getName()).orElseThrow(UnauthenticatedUserException::new);
     }
 
     public String getCurrentUserId() {

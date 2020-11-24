@@ -102,7 +102,11 @@ public class PostDtoMapper {
         } else {
             post.setModerationStatus(ModerationStatus.NEW);
         }
-        request.getTagNames().forEach(tag -> post.getTags().add(tag.toUpperCase()));
+        request.getTagNames().forEach(tag -> {
+            tag = tag.toUpperCase().trim();
+            if (!post.getTags().contains(tag))
+                post.getTags().add(tag);
+        });
         return post;
     }
 

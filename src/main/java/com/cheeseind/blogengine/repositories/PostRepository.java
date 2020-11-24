@@ -9,8 +9,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
@@ -100,12 +98,16 @@ public interface PostRepository extends MongoRepository<Post, String> {
     long countVisiblePosts();
 
     // ======================== Find all tags in visible posts
-//    @Query(value = "{" + MAKE_POST_VISIBLE_CONDITION + "}")
-    @Aggregation(pipeline = "{ '$project': { 'id' : '$tags' } }")
+    @Aggregation(pipeline = {
+            "{ '$match' : {" + MAKE_POST_VISIBLE_CONDITION + "} }",
+            "{ '$project': { 'id' : '$tags' } }"
+    })
     List<List<String>> findAllTags();
 
-    @Query(value = "{" + MAKE_POST_VISIBLE_CONDITION + "}")
-    @Aggregation("{ '$project': { 'id' : {$year : '$time' } } }")
+    @Aggregation(pipeline = {
+            "{ '$match' : {" + MAKE_POST_VISIBLE_CONDITION + "} }",
+            "{ '$project': { 'id' : {$year : '$time' } } }"
+    })
     List<Integer> findAllYears();
 
     @Query(value = "{" + MAKE_POST_VISIBLE_CONDITION + "}")

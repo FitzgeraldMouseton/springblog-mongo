@@ -123,8 +123,6 @@ public class GeneralService {
         return calendarDto;
     }
 
-
-
     @Transactional
     public CommentResponse addComment(final CommentRequest request) {
         User user = userService.getCurrentUser();

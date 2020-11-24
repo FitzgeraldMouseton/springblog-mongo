@@ -2,13 +2,11 @@ package com.cheeseind.blogengine.models;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -46,7 +44,7 @@ public class Post {
 
     private int commentsCount;
 
-    private Set<String> tags = new HashSet<>();
+    private List<String> tags = new ArrayList<>();
 
     private List<String> usersLikedPost = new ArrayList<>();
 
