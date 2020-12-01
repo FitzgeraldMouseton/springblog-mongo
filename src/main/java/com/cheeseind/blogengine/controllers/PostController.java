@@ -67,13 +67,16 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addPost(@Valid @RequestBody final AddPostRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(postService.addPost(request));
+    @ResponseStatus(HttpStatus.CREATED)
+    public SimpleResponseDto addPost(@Valid @RequestBody final AddPostRequest request) {
+        return postService.addPost(request);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<?> editPost(@PathVariable final String id, @Valid @RequestBody final AddPostRequest request) {
-        return ResponseEntity.status(HttpStatus.OK).body(postService.editPost(id, request));
+    @ResponseStatus(value = HttpStatus.NO_CONTENT, reason = "Потому что для методов PUT " +
+            "и DELETE так принято")
+    public SimpleResponseDto editPost(@PathVariable final String id, @Valid @RequestBody final AddPostRequest request) {
+        return postService.editPost(id, request);
     }
 
     @PostMapping("like")

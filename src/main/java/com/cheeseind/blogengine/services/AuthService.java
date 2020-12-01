@@ -1,6 +1,6 @@
 package com.cheeseind.blogengine.services;
 
-import com.cheeseind.blogengine.exceptions.PageNotFoundException;
+import com.cheeseind.blogengine.exceptions.blogexeptions.PageNotFoundException;
 import com.cheeseind.blogengine.exceptions.authexceptions.InvalidCaptchaCodeException;
 import com.cheeseind.blogengine.mappers.UserDtoMapper;
 import com.cheeseind.blogengine.models.CaptchaCode;

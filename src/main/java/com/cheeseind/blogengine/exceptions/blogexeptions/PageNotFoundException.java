@@ -1,7 +1,8 @@
 package com.cheeseind.blogengine.exceptions.blogexeptions;
 
-import com.cheeseind.blogengine.exceptions.AbstractBadRequestException;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-public class PageNotFoundException extends AbstractBadRequestException {
-
+@ResponseStatus(HttpStatus.NOT_FOUND)
+public class PageNotFoundException extends RuntimeException {
 }

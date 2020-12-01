@@ -22,12 +22,10 @@ import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Component
-//@RequiredArgsConstructor
 public class PostDtoMapper {
 
     private final PostService postService;

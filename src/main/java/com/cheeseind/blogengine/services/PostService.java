@@ -1,7 +1,7 @@
 package com.cheeseind.blogengine.services;
 
-import com.cheeseind.blogengine.exceptions.NotEnoughPrivilegesException;
-import com.cheeseind.blogengine.exceptions.PageNotFoundException;
+import com.cheeseind.blogengine.exceptions.authexceptions.NotEnoughPrivilegesException;
+import com.cheeseind.blogengine.exceptions.blogexeptions.PageNotFoundException;
 import com.cheeseind.blogengine.mappers.PostDtoMapper;
 import com.cheeseind.blogengine.models.ModerationStatus;
 import com.cheeseind.blogengine.models.Post;

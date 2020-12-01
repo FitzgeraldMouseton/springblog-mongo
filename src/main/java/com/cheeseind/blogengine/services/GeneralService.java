@@ -1,7 +1,6 @@
 package com.cheeseind.blogengine.services;
 
-import com.cheeseind.blogengine.exceptions.NotEnoughPrivilegesException;
-import com.cheeseind.blogengine.exceptions.UnauthenticatedUserException;
+import com.cheeseind.blogengine.exceptions.authexceptions.NotEnoughPrivilegesException;
 import com.cheeseind.blogengine.models.*;
 import com.cheeseind.blogengine.models.dto.SimpleResponseDto;
 import com.cheeseind.blogengine.models.dto.blogdto.CalendarDto;
