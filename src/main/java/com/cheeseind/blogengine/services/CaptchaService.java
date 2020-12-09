@@ -16,7 +16,9 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Slf4j
@@ -84,9 +86,12 @@ public class CaptchaService {
             e.printStackTrace();
         }
 
-        CaptchaCode captchaCode = new CaptchaCode(code, secretCode, LocalDateTime.now(ZoneOffset.UTC));
+        CaptchaCode captchaCode = new CaptchaCode(code, secretCode, ZonedDateTime.now(ZoneId.of("Europe/Moscow")));
+        log.info(captchaCode.getTime().toString());
         captchaRepository.save(captchaCode);
 //        dbEventsCreator.deleteCaptchaWhenExpired(captchaCode, captchaExpirationTime);
+        String s = captchaRepository.findByCode(code).get().getTime().toString();
+        log.info(s);
         return captchaDto;
     }
 

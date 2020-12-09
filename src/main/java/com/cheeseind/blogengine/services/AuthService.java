@@ -49,6 +49,9 @@ public class AuthService {
         checkCaptchaCode(request.getCaptchaSecret(), request.getCaptcha());
         User user = userDtoMapper.registerRequestToUser(request);
         user.setPassword(encoder.encode(user.getPassword()));
+        if (!userService.isAnyUserExists()) {
+            user.setModerator(true);
+        }
         userService.save(user);
         return new SimpleResponseDto(true);
     }

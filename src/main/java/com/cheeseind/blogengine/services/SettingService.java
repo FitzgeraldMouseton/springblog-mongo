@@ -47,7 +47,7 @@ public class SettingService {
     }
 
     void fillSettings() {
-        settings.forEach((k,v) -> settingsRepository.save(new GlobalSetting(k, v, false)));
+        settings.forEach((k,v) -> settingsRepository.save(new GlobalSetting(k, v, true)));
     }
 
     public GlobalSetting setSetting(final String setting, final Boolean isActive) {

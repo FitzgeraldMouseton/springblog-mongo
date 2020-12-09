@@ -11,9 +11,4 @@ public class DefaultController {
     public String redirectToIndex() {
         return "forward:/";
     }
-
-//    @GetMapping("/")
-//    public String index() {
-//        return "index";
-//    }
 }

@@ -36,4 +36,8 @@ public class UserService {
     public String getCurrentUserId() {
         return getCurrentUser().getId();
     }
+
+    public boolean isAnyUserExists() {
+        return userRepository.countAllBy() > 0;
+    }
 }
