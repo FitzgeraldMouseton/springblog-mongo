@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://mongo:27017/blogmongodb
+      uri: mongodb://localhost:27017/blogmongodb
       auto-index-creation: true   # Без этого индексы у полей не создаются
 
   mail:

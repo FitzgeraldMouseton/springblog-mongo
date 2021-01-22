@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -19,7 +18,6 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
 @Slf4j
 @Configuration
@@ -65,7 +63,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public CustomUsernamePasswordAuthFilter authenticationFilter() throws Exception {
         CustomUsernamePasswordAuthFilter authenticationFilter
                 = new CustomUsernamePasswordAuthFilter();
-        authenticationFilter.setAuthenticationSuccessHandler(new CustomAuthenticationHandler(userDtoMapper));
+        authenticationFilter.setAuthenticationSuccessHandler(new CustomAuthenticationSuccessHandler(userDtoMapper));
         authenticationFilter.setAuthenticationFailureHandler(new CustomAuthenticationFailureHandler());
         authenticationFilter.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/api/auth/login", "POST"));
         authenticationFilter.setAuthenticationManager(authenticationManagerBean());
@@ -77,12 +75,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new CustomAccessDeniedHandler();
     }
 
-    @Bean
-    public SimpleMappingExceptionResolver exceptionResolver() {
-        SimpleMappingExceptionResolver exceptionResolver = new SimpleMappingExceptionResolver();
-        exceptionResolver.setExcludedExceptions(AccessDeniedException.class);
-        return exceptionResolver;
-    }
+//    @Bean
+//    public SimpleMappingExceptionResolver exceptionResolver() {
+//        SimpleMappingExceptionResolver exceptionResolver = new SimpleMappingExceptionResolver();
+//        exceptionResolver.setExcludedExceptions(AccessDeniedException.class);
+//        return exceptionResolver;
+//    }
 
     @Bean
     public AuthenticationEntryPoint authenticationEntryPoint(){

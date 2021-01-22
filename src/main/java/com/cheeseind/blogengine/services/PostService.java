@@ -114,53 +114,31 @@ public class PostService {
         List<Post> posts;
         long postsCount;
         Pageable pageable = PageRequest.of(offset/limit, limit);
-        switch (status) {
-            case "inactive" -> {
-                postsCount = postRepository.countInactivePostsOfUser(userId);
-                posts = postRepository.getCurrentUserInactivePosts(userId, pageable);
-            }
-            case "pending" -> {
-                postsCount = postRepository.countActivePostsOfUser(userId, ModerationStatus.NEW);
-                posts = postRepository.getCurrentUserActivePosts(userId, ModerationStatus.NEW, pageable);
-            }
-            case "declined" -> {
-                postsCount = postRepository.countActivePostsOfUser(userId, ModerationStatus.DECLINED);
-                posts = postRepository.getCurrentUserActivePosts(userId, ModerationStatus.DECLINED, pageable);
-            }
-            case "published" -> {
-                postsCount = postRepository.countActivePostsOfUser(userId, ModerationStatus.ACCEPTED);
-                posts = postRepository.getCurrentUserActivePosts(userId, ModerationStatus.ACCEPTED, pageable);
-            }
+        posts = switch (status) {
+            case "inactive" -> postRepository.getCurrentUserInactivePosts(userId, pageable);
+            case "pending" -> postRepository.getCurrentUserActivePosts(userId, ModerationStatus.NEW, pageable);
+            case "declined" -> postRepository.getCurrentUserActivePosts(userId, ModerationStatus.DECLINED, pageable);
+            case "published" -> postRepository.getCurrentUserActivePosts(userId, ModerationStatus.ACCEPTED, pageable);
             default -> throw new IllegalArgumentException("Wrong argument 'status': " + status);
-        }
+        };
 
         List<PostDto> postDtos = getPostDTOs(posts);
-        return new PostsInfoResponse<>(postsCount, postDtos);
+        return new PostsInfoResponse<>(postDtos.size(), postDtos);
     }
 
     public PostsInfoResponse<ModerationResponse> findPostsForModeration(final int offset, final int limit, final String status) {
         User user = userService.getCurrentUser();
         if(user.isModerator()) {
-            long count;
             List<Post> posts;
             Pageable pageable = PageRequest.of(offset/limit, limit);
-            switch (status) {
-                case "new" -> {
-                    count = postRepository.countAllByModerationStatusAndActiveTrue(ModerationStatus.NEW);
-                    posts = postRepository.getPostsForModeration(ModerationStatus.NEW, pageable);
-                }
-                case "declined" -> {
-                    count = postRepository.countAllByModerationStatusAndActiveTrue(ModerationStatus.DECLINED);
-                    posts = postRepository.getPostsForModeration(ModerationStatus.DECLINED, pageable);
-                }
-                case "accepted" -> {
-                    count = postRepository.countAllByModerationStatusAndActiveTrue(ModerationStatus.ACCEPTED);
-                    posts = postRepository.getPostsForModeration(ModerationStatus.ACCEPTED, pageable);
-                }
+            posts = switch (status) {
+                case "new" -> postRepository.getPostsForModeration(ModerationStatus.NEW, pageable);
+                case "declined" -> postRepository.getPostsForModeration(ModerationStatus.DECLINED, pageable);
+                case "accepted" -> postRepository.getPostsForModeration(ModerationStatus.ACCEPTED, pageable);
                 default -> throw new IllegalArgumentException("Wrong argument 'status': " + status);
-            }
+            };
             List<ModerationResponse> postDtos = getModerationPostDTOs(posts);
-            return new PostsInfoResponse<>(count, postDtos);
+            return new PostsInfoResponse<>(postDtos.size(), postDtos);
         }
         return null;
     }

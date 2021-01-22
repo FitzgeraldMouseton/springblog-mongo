@@ -37,7 +37,6 @@ public class UserDtoMapper {
         user.setPassword(request.getPassword());
         user.setRegTime(LocalDateTime.now(ZoneOffset.UTC));
         user.setModerator(false);
-        log.info(user.getName());
         return user;
     }
 

@@ -24,8 +24,6 @@ public class Comment {
 
     private String postId;
 
-//    private List<Comment> comments = new ArrayList<>();
-
     private String parentId;
 
     @DBRef

@@ -1,8 +1,8 @@
 package com.cheeseind.blogengine.services;
 
 import com.cheeseind.blogengine.models.dto.blogdto.tagdto.SingleTagDto;
-import com.cheeseind.blogengine.models.dto.blogdto.tagdto.TagsResponse;
 import com.cheeseind.blogengine.repositories.PostRepository;
+import com.cheeseind.blogengine.models.dto.blogdto.tagdto.TagsResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.math3.util.Precision;

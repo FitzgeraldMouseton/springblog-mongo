@@ -50,7 +50,6 @@ public class GeneralService {
     private final MongoTemplate mongoTemplate;
 
     private final PostRepository postRepository;
-//    private final BCryptPasswordEncoder encoder;
 
     private DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneOffset.UTC);
     private static final int FOLDER_NAME_LENGTH = 4;

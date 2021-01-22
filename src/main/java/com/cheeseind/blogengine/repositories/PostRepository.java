@@ -7,7 +7,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.Aggregation;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
-import org.springframework.stereotype.Repository;
 
 import java.time.ZonedDateTime;
 import java.util.Date;
@@ -15,7 +14,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-@Repository
 public interface PostRepository extends MongoRepository<Post, String> {
 
     String MAKE_POST_VISIBLE_CONDITION = "'active' : true, 'moderationStatus' : 'ACCEPTED', 'time' : {$lt : new Date()}";

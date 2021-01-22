@@ -9,9 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @Document(collection = "posts")
@@ -20,7 +18,7 @@ public class Post {
     @Id
     private String id;
 
-//    @Field(targetType = FieldType.INT32)
+    //    @Field(targetType = FieldType.INT32)
     private boolean active;
 
     private ModerationStatus moderationStatus;

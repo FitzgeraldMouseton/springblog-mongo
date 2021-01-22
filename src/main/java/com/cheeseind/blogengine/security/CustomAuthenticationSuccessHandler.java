@@ -18,7 +18,7 @@ import java.nio.charset.StandardCharsets;
 
 @Slf4j
 @AllArgsConstructor
-public class CustomAuthenticationHandler implements AuthenticationSuccessHandler {
+public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
     private final UserDtoMapper userDtoMapper;
     private final ObjectMapper objectMapper = new ObjectMapper();

@@ -1,6 +1,7 @@
 package com.cheeseind.blogengine.controllers;
 
 import com.cheeseind.blogengine.models.dto.SimpleResponseDto;
+import com.cheeseind.blogengine.models.dto.blogdto.ModerationResponse;
 import com.cheeseind.blogengine.models.dto.blogdto.postdto.AddPostRequest;
 import com.cheeseind.blogengine.models.dto.blogdto.postdto.PostDto;
 import com.cheeseind.blogengine.models.dto.blogdto.postdto.PostsInfoResponse;
@@ -97,9 +98,9 @@ public class PostController {
     }
 
     @GetMapping("moderation")
-    public PostsInfoResponse getPostsForModeration(@RequestParam final int offset,
-                                                   @RequestParam final int limit,
-                                                   @RequestParam final String status) {
+    public PostsInfoResponse<ModerationResponse> getPostsForModeration(@RequestParam final int offset,
+                                                                       @RequestParam final int limit,
+                                                                       @RequestParam final String status) {
         return postService.findPostsForModeration(offset, limit, status);
     }
 }
