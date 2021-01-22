@@ -108,8 +108,10 @@ public interface PostRepository extends MongoRepository<Post, String> {
     })
     List<Integer> findAllYears();
 
-    @Query(value = "{" + MAKE_POST_VISIBLE_CONDITION + "}")
-    @Aggregation("{ '$project': { 'id' : '$time' } }")
+    @Aggregation(pipeline = {
+            "{ '$match' : {" + MAKE_POST_VISIBLE_CONDITION + "} }",
+            "{ '$project': { 'id' : '$time' } }"
+    })
     List<Date> findAllDatesWithPostsInYear(int year);
 
 

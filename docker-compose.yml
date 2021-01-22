@@ -2,7 +2,6 @@ version: '3'
 
 volumes:
   mongo-volume:
-  d6k-Mpz-ks5-3KQ
 services:
   web:
     #    image: docker-test
