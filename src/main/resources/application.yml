@@ -7,7 +7,7 @@ spring:
   mail:
     host: mailhog
     port: 1025
-    username:
+    username: Ivan Fyodorovich Kruzenshtern
     password:
 
   servlet:
