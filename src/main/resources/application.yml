@@ -1,15 +1,14 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://localhost:27017/blogmongodb
+      uri: mongodb://mongo:27017/blogmongodb
       auto-index-creation: true   # Без этого индексы у полей не создаются
 
   mail:
-    host: smtp.yandex.ru
-    username: ${EMAIL_USERNAME}
-    password: ${EMAIL_PASSWORD}
-    port: 465
-    protocol: smtps
+    host: mailhog
+    port: 1025
+    username:
+    password:
 
   servlet:
     multipart:

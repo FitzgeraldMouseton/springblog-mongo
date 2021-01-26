@@ -18,13 +18,13 @@ public class EmailServiceImpl implements EmailService {
 
     private final JavaMailSender mailSender;
 
-    @Value("${spring.mail.username}")
-    private String username;
+//    @Value("${spring.mail.username}")
+//    private String username;
 
     @Override
     public void send(final String mailTo, final String subject, final String message) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setFrom(username);
+//        mailMessage.setFrom(username);
         mailMessage.setTo(mailTo);
         mailMessage.setSubject(subject);
         mailMessage.setText(message);

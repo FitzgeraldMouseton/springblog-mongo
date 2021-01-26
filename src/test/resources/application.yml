@@ -5,11 +5,11 @@ spring:
       auto-index-creation: true   # Без этого индексы у полей не создаются
 
   mail:
-    host: smtp.yandex.ru
-    username: ${EMAIL_USERNAME}
-    password: ${EMAIL_PASSWORD}
-    port: 465
-    protocol: smtps
+    host: 127.0.0.1
+    #    username: ${EMAIL_USERNAME}
+#    password: ${EMAIL_PASSWORD}
+    port: 1025
+#    protocol: smtps
 
   servlet:
     multipart:
